@@ -48,6 +48,8 @@ def main():
             with open(filename, "rb") as f:
                 ram_copy = f.read()
 
+            print(f"Uploading file {filename} to {conf.site}\n")
+
             qheader = {"Content-Type": "application/x-www-form-urlencoded"}
 
             req = requests.Request(
