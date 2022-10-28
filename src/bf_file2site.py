@@ -1,4 +1,4 @@
-"""bf-file2site.py - A utility to upload a file to a BigFix
+"""bf_file2site.py - A utility to upload a file to a BigFix
 site via the REST API"""
 from getpass import getpass
 import sys
@@ -48,9 +48,12 @@ def main():
         help="Site url, like custom/CustomSite. Default 'master'",
     )
     parser.add_argument("-P", "--bfpass", type=str, help="BigFix Console/REST Password")
-    parser.add_argument("files", nargs="+", help="Files to upload")
+    parser.add_argument("files", nargs="*", help="Files to upload")
 
     conf = parser.parse_args()
+
+    # We will store the bigfix account password over this:
+    bfpass = ""
 
     if conf.savecreds is not None:
         ## We need to prompt for and save encrypted credentials
@@ -75,9 +78,15 @@ def main():
         keyring.set_password(conf.savecreds, conf.bfuser, onepass)
         sys.exit(0)
 
+    # First, set bfpass to the provided command switch (if any)
+    if conf.bfpass is not None:
+        bfpass = conf.bfpass
+
+    # If a keystore reference is provided, use that, overriding any
+    # previous setting
     if conf.keycreds is not None:
-        xx = keyring.get_credential(conf.keycreds, conf.bfuser)
-        pass
+        cred_set = keyring.get_credential(conf.keycreds, conf.bfuser)
+        bfpass = cred_set["password"]
 
     ## Do the file POST iff the bigfix server is specified
     if conf.bfserver is not None:
