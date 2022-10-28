@@ -1,5 +1,6 @@
 """bf-file2site.py - A utility to upload a file to a BigFix
 site via the REST API"""
+from getpass import getpass
 import sys
 import os
 import argparse
@@ -53,8 +54,25 @@ def main():
 
     if conf.savecreds is not None:
         ## We need to prompt for and save encrypted credentials
-        bf_pass = input(f"BigFix password for {conf.bfuser}: ")
-        keyring.set_password(conf.savecreds, conf.bfuser, bf_pass)
+        onepass="not"
+        twopass=""
+
+        print(f"Enter the password for the user {conf.bfuser}")
+        print("The password will not display. You must enter the same")
+        print("password twice in a row. It will be stored encrypted")
+        print(f"under the key name {conf.savecreds} in your system's")
+        print("secure credential store. Use the command switches: ")
+        print(f"-k {conf.savecreds} -U {conf.bfuser}    --OR--")
+        print(f"--keycreds {conf.savecreds} --bfuser {conf.bfuser}")
+        print("to run the program without having to provide the password")
+        while onepass != twopass:
+            if (onepass != "not"):
+                print("\nPasswords did not match. Try again.\n")
+
+            onepass = getpass(f"BigFix password for {conf.bfuser}: ")
+            twopass = getpass("Enter the password again: ")
+
+        keyring.set_password(conf.savecreds, conf.bfuser, onepass)
         sys.exit(0)
 
     if conf.keycreds is not None:
