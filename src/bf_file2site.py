@@ -57,7 +57,7 @@ def main():
 
     if conf.savecreds is not None:
         ## We need to prompt for and save encrypted credentials
-        onepass="not"
+        onepass="not"  # Set to ensure mismatch and avoid fail msg 1st time
         twopass=""
 
         print(f"Enter the password for the user {conf.bfuser}")
@@ -69,7 +69,7 @@ def main():
         print(f"--keycreds {conf.savecreds} --bfuser {conf.bfuser}")
         print("to run the program without having to provide the password")
         while onepass != twopass:
-            if (onepass != "not"):
+            if onepass != "not":
                 print("\nPasswords did not match. Try again.\n")
 
             onepass = getpass(f"BigFix password for {conf.bfuser}: ")
@@ -91,7 +91,7 @@ def main():
     ## Do the file POST iff the bigfix server is specified
     if conf.bfserver is not None:
         bf_sess = requests.Session()
-        bf_sess.auth = (conf.bfuser, conf.bfpass)
+        bf_sess.auth = (conf.bfuser, bfpass)
 
         for filename in conf.files:
             with open(filename, "rb") as file_handle:
