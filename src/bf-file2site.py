@@ -4,6 +4,8 @@ import sys
 import os
 import argparse
 import requests
+import keyring
+
 
 # The following is just for warning suppression
 import urllib3
@@ -26,6 +28,16 @@ def main():
         default=52311,
     )
     parser.add_argument(
+        "-c", "--savecreds",
+        type=str,
+        help="Store credentials encrypted"
+    )
+    parser.add_argument(
+        "-k", "--keycreds",
+        type=str,
+        help="Use stored credentials"
+    )
+    parser.add_argument(
         "-U", "--bfuser", type=str, help="BigFix Console/REST User name"
     )
     parser.add_argument(
@@ -38,6 +50,17 @@ def main():
     parser.add_argument("files", nargs="+", help="Files to upload")
 
     conf = parser.parse_args()
+
+    if conf.savecreds is not None:
+        ## We need to prompt for and save encrypted credentials
+        bf_user = input("BigFix username: ")
+        bf_pass = input("BigFix password: ")
+        keyring.set_password(conf.savecreds, bf_user, bf_pass)
+        sys.exit(0)
+
+    if conf.keycreds is not None:
+        xx = keyring.get_credential(conf.keycreds)
+        pass
 
     ## Do the file POST iff the bigfix server is specified
     if conf.bfserver is not None:
