@@ -45,8 +45,8 @@ def main():
         bf_sess.auth = (conf.bfuser, conf.bfpass)
 
         for filename in conf.files:
-            with open(filename, "rb") as f:
-                ram_copy = f.read()
+            with open(filename, "rb") as file_handle:
+                ram_copy = file_handle.read()
 
             print(f"Uploading file {filename} to {conf.site}\n")
 
