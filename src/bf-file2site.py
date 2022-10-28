@@ -53,13 +53,12 @@ def main():
 
     if conf.savecreds is not None:
         ## We need to prompt for and save encrypted credentials
-        bf_user = input("BigFix username: ")
-        bf_pass = input("BigFix password: ")
-        keyring.set_password(conf.savecreds, bf_user, bf_pass)
+        bf_pass = input(f"BigFix password for {conf.bfuser}: ")
+        keyring.set_password(conf.savecreds, conf.bfuser, bf_pass)
         sys.exit(0)
 
     if conf.keycreds is not None:
-        xx = keyring.get_credential(conf.keycreds)
+        xx = keyring.get_credential(conf.keycreds, conf.bfuser)
         pass
 
     ## Do the file POST iff the bigfix server is specified
