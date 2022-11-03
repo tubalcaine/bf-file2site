@@ -50,6 +50,10 @@ def main():
     bfpass = ""
 
     if conf.savecreds is not None:
+        if conf.bfuser is None:
+            print("You must specify a user name with --bfuser or -U.")
+            sys.exit(1)
+
         ## We need to prompt for and save encrypted credentials
         onepass = "not"  # Set to ensure mismatch and avoid fail msg 1st time
         twopass = ""
@@ -79,8 +83,7 @@ def main():
     # If a keystore reference is provided, use that, overriding any
     # previous setting
     if conf.keycreds is not None:
-        cred_set = keyring.get_credential(conf.keycreds, conf.bfuser)
-        bfpass = cred_set["password"]
+        bfpass = keyring.get_password(conf.keycreds, conf.bfuser)
 
     ## Do the file POST iff the bigfix server is specified
     if conf.bfserver is not None:
@@ -112,6 +115,9 @@ def main():
                 print(f"\n\nREST API call failed with status {result.status_code}")
                 print(f"Reason: {result.text}")
                 sys.exit(1)
+            else:
+                print(f"File [{filename}] posted successfully.")
+                print(f"  http result [{result.status_code} {result.reason}]")
 
     print("Run complete!")
 
