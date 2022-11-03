@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Analysis>
+		<Title>Tattoo Properties</Title>
+		<Description><![CDATA[&lt;enter a description of the analysis here&gt; ]]></Description>
+		<Relevance>true</Relevance>
+		<Source>Internal</Source>
+		<SourceReleaseDate>2022-11-03</SourceReleaseDate>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Thu, 03 Nov 2022 16:33:07 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Property Name="TattooExists" ID="1">exists file "bf2_subnets.csv" of client folder of site "actionsite"</Property>
+		<Property Name="TattooEntry" ID="2">line whose (it starts with tuple string item 0 of concatenation ", " of (addresses whose (it as string != "0.0.0.0") of ip interfaces whose (not loopback of it) of network as string)) of file "bf2_subnets.csv" of client folder of site "actionsite"</Property>
+		<Property Name="NETLocation" ID="3">preceding text of last "," of following text of first "," of line whose (it starts with tuple string item 0 of concatenation ", " of (addresses whose (it as string != "0.0.0.0") of ip interfaces whose (not loopback of it) of network as string)) of file "bf2_subnets.csv" of client folder of site "actionsite"</Property>
+		<Property Name="NETType" ID="4">following text of last "," of line whose (it starts with tuple string item 0 of concatenation ", " of (addresses whose (it as string != "0.0.0.0") of ip interfaces whose (not loopback of it) of network as string)) of file "bf2_subnets.csv" of client folder of site "actionsite"</Property>
+	</Analysis>
+</BES>
