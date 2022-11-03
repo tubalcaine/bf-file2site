@@ -29,15 +29,9 @@ def main():
         default=52311,
     )
     parser.add_argument(
-        "-c", "--savecreds",
-        type=str,
-        help="Store credentials encrypted"
+        "-c", "--savecreds", type=str, help="Store credentials encrypted"
     )
-    parser.add_argument(
-        "-k", "--keycreds",
-        type=str,
-        help="Use stored credentials"
-    )
+    parser.add_argument("-k", "--keycreds", type=str, help="Use stored credentials")
     parser.add_argument(
         "-U", "--bfuser", type=str, help="BigFix Console/REST User name"
     )
@@ -57,8 +51,8 @@ def main():
 
     if conf.savecreds is not None:
         ## We need to prompt for and save encrypted credentials
-        onepass="not"  # Set to ensure mismatch and avoid fail msg 1st time
-        twopass=""
+        onepass = "not"  # Set to ensure mismatch and avoid fail msg 1st time
+        twopass = ""
 
         print(f"Enter the password for the user {conf.bfuser}")
         print("The password will not display. You must enter the same")
