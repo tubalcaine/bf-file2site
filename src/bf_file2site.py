@@ -102,7 +102,7 @@ def main():
                 "POST",
                 f"https://{conf.bfserver}:{conf.bfport}"
                 + f"/api/site/{conf.site}/file/{os.path.basename(filename)}"
-                + "?force=true&isClientFile=true",
+                + "?force=true&isClient=true",
                 headers=qheader,
                 data=ram_copy,
             )
